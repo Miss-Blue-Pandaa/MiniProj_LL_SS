@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2025  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2026  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -74,7 +74,7 @@ static APPW_CREATE_ITEM _aCreate[] = {
   },
   { WM_OBJECT_SWITCH_Create,
     ID_SWITCH_00, ID_SCREEN_00,
-    { { { DISPOSE_MODE_REL_PARENT, 22, 0, 0 },
+    { { { DISPOSE_MODE_REL_PARENT, 26, 0, 0 },
         { DISPOSE_MODE_REL_PARENT, 123, 0, 0 },
         { DISPOSE_MODE_NULL, 0, 0, 0 },
         { DISPOSE_MODE_NULL, 0, 0, 0 },
@@ -124,17 +124,6 @@ static APPW_CREATE_ITEM _aCreate[] = {
         { DISPOSE_MODE_NULL, 0, 0, 0 },
       },
       200, 105, 0, 0, 0, 0
-    },
-    { 0, 0 }
-  },
-  { WM_OBJECT_TIMER_Create,
-    ID_TIMER_00, ID_SCREEN_00,
-    { { { DISPOSE_MODE_REL_PARENT, 0, 0, 0 },
-        { DISPOSE_MODE_REL_PARENT, 0, 0, 0 },
-        { DISPOSE_MODE_NULL, 480, 0, 0 },
-        { DISPOSE_MODE_NULL, 272, 0, 0 },
-      },
-      1, 1, 0, 0, 0, 0
     },
     { 0, 0 }
   },
@@ -209,8 +198,6 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_GAUGE_00,  APPW_SET_PROP_ROUNDEDEND,   { ARG_V(0) } },
   { ID_GAUGE_00,  APPW_SET_PROP_VALUE,        { ARG_V(2048) } },
   { ID_GAUGE_00,  APPW_SET_PROP_UNTOUCHABLE,  { ARG_V(0) } },
-  { ID_TIMER_00,  APPW_SET_PROP_PERIOD,       { ARG_V(100) } },
-  { ID_TIMER_00,  APPW_SET_PROP_AUTORESTART,  { ARG_V(0) } },
 };
 
 /*********************************************************************
@@ -223,10 +210,6 @@ static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
   { ID_SLIDER_00, WM_NOTIFICATION_VALUE_CHANGED,    0,            APPW_JOB_NULL,           ID_SCREEN_00__ID_SLIDER_00__WM_NOTIFICATION_VALUE_CHANGED,
   },
   { ID_ROTARY_00, WM_NOTIFICATION_VALUE_CHANGED,    0,            APPW_JOB_NULL,           ID_SCREEN_00__ID_ROTARY_00__WM_NOTIFICATION_VALUE_CHANGED,
-  },
-  { ID_SCREEN_00, APPW_NOTIFICATION_INITDIALOG,     ID_TIMER_00,  APPW_JOB_START,          ID_SCREEN_00__APPW_NOTIFICATION_INITDIALOG__ID_TIMER_00__APPW_JOB_START,
-  },
-  { ID_TIMER_00,  APPW_NOTIFICATION_TIMER,          0,            APPW_JOB_NULL,           ID_SCREEN_00__ID_TIMER_00__APPW_NOTIFICATION_TIMER,
   },
 };
 

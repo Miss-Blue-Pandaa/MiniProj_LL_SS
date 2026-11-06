@@ -1,5 +1,4 @@
 #include "stm32f7xx.h"                  // Device header
-
 extern void configuration_overclock(void);
 extern int Init_GUIThread (void);
 extern void Init_Ethernet (void);
@@ -47,8 +46,33 @@ int main(void)
 	/**********************************
 	Début Initialisation périphérique
 	**********************************/
+	
+	RCC->APB1ENR |= (1<<29); //activation DAC
+	RCC->APB2ENR |= (1<<10); //activation ADC3
 
-	//Initialiser vos périphériques ici
+	RCC->AHB1ENR|=(1<<8); //Activ GPIO I
+	RCC->AHB1ENR|=(1<<0); //Activ GPIO A
+	RCC->AHB1ENR|=(1<<5); //Activ GPIO F
+	//RCC->APB2ENR|=(1<<17); //Activ TIM10
+	
+	GPIOI->MODER|=(1<<4); //LED en output en PI2
+	GPIOA->MODER |= (3<<8); //PA4 en mode analog (sortie PA4)
+	GPIOF->MODER |= (3<<20); //PF10 en mode analog potentiomètre
+	//GPIOF->MODER |= (3<<24); //PF6 en mode TIM10_CH1
+	
+	DAC->CR |= (1<<0); //channel 1 en sortie, port A
+	ADC3->SQR3 |= (8<<0); // Selection de la voie PF10
+	ADC3->CR2 |= (1<<0); // activation de l'ADC
+	
+	/*TIM10->CCMR1 |= (6<<4); //TIM10_CH1 en PWM mode 1
+	TIM10->CCER |= (1<<0);	//connectr 0C1 
+	TIM10->PSC = 7; 				//Prescaler
+	TIM10->ARR = 39999;			//Periode PWM
+	TIM10->CCR1 = 4000;			//DutyCyle PWM
+	TIM10->CR1 |= (1<<0);		//Lancer le Timer*/
+
+
+                           
 
 	/**********************************
 	Fin Initialisation périphérique

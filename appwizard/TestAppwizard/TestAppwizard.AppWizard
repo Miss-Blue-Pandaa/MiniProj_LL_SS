@@ -185,7 +185,7 @@
         ySize=26
         <X0>
           Mode=2
-          Off=22
+          Off=26
           Id=0
         </X0>
         <Y0>
@@ -405,10 +405,6 @@
       Flags=0
     </NULL>
   </Interactions>
-  <Selection>
-    Root=ID_SCREEN_00
-    Object=2056
-  </Selection>
   <Terms>
     Item=ID_VAR_00,(A+10)%1000,1, OV: //
   </Terms>
