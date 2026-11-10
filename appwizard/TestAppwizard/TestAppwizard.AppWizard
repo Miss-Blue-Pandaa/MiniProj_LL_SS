@@ -381,6 +381,41 @@
         SetUntouchable=true
       </SetUntouchable>
     </Gauge>
+    <Text>
+      ParentId=2048
+      IdString=ID_TEXT_02
+      Id=2057
+      IdPrev=0
+      IdPost=0
+      <Dispose>
+        xSize=290
+        ySize=32
+        <X0>
+          Mode=2
+          Off=187
+          Id=0
+        </X0>
+        <Y0>
+          Mode=2
+          Off=240
+          Id=0
+        </Y0>
+      </Dispose>
+      <SetColor>
+        Color=ff0000ff
+      </SetColor>
+      <SetTextAlign>
+        Alignment=12
+        xOff=0
+        yOff=0
+      </SetTextAlign>
+      <SetFont>
+        Font=NettoOT_32_Normal_EXT_AA4.xbf
+      </SetFont>
+      <SetUntouchable>
+        SetUntouchable=true
+      </SetUntouchable>
+    </Text>
   </Objects>
   <Interactions>
     <NULL>
@@ -405,10 +440,6 @@
       Flags=0
     </NULL>
   </Interactions>
-  <Selection>
-    Root=ID_SCREEN_00
-    Object=2056
-  </Selection>
   <Terms>
     Item=ID_VAR_00,(A+10)%1000,1, OV: //
   </Terms>

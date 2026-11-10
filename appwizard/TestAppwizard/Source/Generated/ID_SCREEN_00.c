@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2025  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2026  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -127,14 +127,14 @@ static APPW_CREATE_ITEM _aCreate[] = {
     },
     { 0, 0 }
   },
-  { WM_OBJECT_TIMER_Create,
-    ID_TIMER_00, ID_SCREEN_00,
-    { { { DISPOSE_MODE_REL_PARENT, 0, 0, 0 },
-        { DISPOSE_MODE_REL_PARENT, 0, 0, 0 },
-        { DISPOSE_MODE_NULL, 480, 0, 0 },
-        { DISPOSE_MODE_NULL, 272, 0, 0 },
+  { WM_OBJECT_TEXT_Create,
+    ID_TEXT_02, ID_SCREEN_00,
+    { { { DISPOSE_MODE_REL_PARENT, 187, 0, 0 },
+        { DISPOSE_MODE_REL_PARENT, 240, 0, 0 },
+        { DISPOSE_MODE_NULL, 0, 0, 0 },
+        { DISPOSE_MODE_NULL, 0, 0, 0 },
       },
-      1, 1, 0, 0, 0, 0
+      290, 32, 0, 0, 0, 0
     },
     { 0, 0 }
   },
@@ -209,8 +209,12 @@ static GUI_CONST_STORAGE APPW_SETUP_ITEM _aSetup[] = {
   { ID_GAUGE_00,  APPW_SET_PROP_ROUNDEDEND,   { ARG_V(0) } },
   { ID_GAUGE_00,  APPW_SET_PROP_VALUE,        { ARG_V(2048) } },
   { ID_GAUGE_00,  APPW_SET_PROP_UNTOUCHABLE,  { ARG_V(0) } },
-  { ID_TIMER_00,  APPW_SET_PROP_PERIOD,       { ARG_V(100) } },
-  { ID_TIMER_00,  APPW_SET_PROP_AUTORESTART,  { ARG_V(0) } },
+  { ID_TEXT_02,   APPW_SET_PROP_COLOR,        { ARG_V(GUI_BLUE) } },
+  { ID_TEXT_02,   APPW_SET_PROP_ALIGNTEXT,    { ARG_V(GUI_ALIGN_LEFT | GUI_ALIGN_VCENTER),
+                                                ARG_V(0),
+                                                ARG_V(0) } },
+  { ID_TEXT_02,   APPW_SET_PROP_FONT,         { ARG_VP(0, acNettoOT_32_Normal_EXT_AA4) } },
+  { ID_TEXT_02,   APPW_SET_PROP_UNTOUCHABLE,  { ARG_V(0) } },
 };
 
 /*********************************************************************
@@ -223,10 +227,6 @@ static GUI_CONST_STORAGE APPW_ACTION_ITEM _aAction[] = {
   { ID_SLIDER_00, WM_NOTIFICATION_VALUE_CHANGED,    0,            APPW_JOB_NULL,           ID_SCREEN_00__ID_SLIDER_00__WM_NOTIFICATION_VALUE_CHANGED,
   },
   { ID_ROTARY_00, WM_NOTIFICATION_VALUE_CHANGED,    0,            APPW_JOB_NULL,           ID_SCREEN_00__ID_ROTARY_00__WM_NOTIFICATION_VALUE_CHANGED,
-  },
-  { ID_SCREEN_00, APPW_NOTIFICATION_INITDIALOG,     ID_TIMER_00,  APPW_JOB_START,          ID_SCREEN_00__APPW_NOTIFICATION_INITDIALOG__ID_TIMER_00__APPW_JOB_START,
-  },
-  { ID_TIMER_00,  APPW_NOTIFICATION_TIMER,          0,            APPW_JOB_NULL,           ID_SCREEN_00__ID_TIMER_00__APPW_NOTIFICATION_TIMER,
   },
 };
 

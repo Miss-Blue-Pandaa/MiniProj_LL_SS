@@ -11,48 +11,81 @@
 #include "stm32f7xx.h"                  // Device header
 #include "AppWizard.h"
 #include <stdio.h>
+#include <string.h>
 
-//extern ANGLE // fonction boucle de test servo avec affichage de ANGLE et DIST
-//extern DIST
- 
+extern float distance_cm();
+extern void servo_set_angle (int);
+
 int32_t udp_sock;                       // UDP socket handle
- 
-// Notify the user application about UDP socket events.
-uint32_t udp_cb_func (int32_t socket, const  NET_ADDR *addr, const uint8_t *buf, uint32_t len) {
-	
-  // Data received
-  // Example
-	// Analyse de ANGLE et DIST
-  if ((buf[0] == 0x01) && (len == 2)) {
 
+
+// Notify the user application about UDP socket events.
+uint32_t udp_cb_func (int32_t socket, const NET_ADDR *addr, const uint8_t *buf, uint32_t len) {
+  char cmd[len + 1]; // +1 pour le caractère de fin de chaîne
+  uint8_t *sendbuf;
+  uint32_t i, message;
+  int angle,alpha;
+  float d = distance_cm ();           // -1 si timeout
+
+  // Copie du datagramme et présence de fin de chaine (\n ou \r)
+  for (i = 0; i < len; i++) {
+    if (buf[i] == '\n' || buf[i] == '\r') break;
+    cmd[i] = (char)buf[i];  
   }
+  cmd[i] = '\0';
+
+
+  // Allocation du buffer d'envoi UDP
+  sendbuf = netUDP_GetBuffer (64);
+  if (sendbuf == NULL) return (0); // Si pas de buffer dispo, on ne répond pas
+
+
+  // Traitement des commandes
+  // Commande "ANGLE <valeur>"
+  if (sscanf(cmd, "ANGLE %d", &angle) == 1) {
+    if ((angle >= 0) && (angle <= 180)) {
+			angle = alpha;
+			servo_set_angle (angle);
+      message = (uint32_t)sprintf((char *)sendbuf, "OK\n");
+    }
+    else {
+      message = (uint32_t)sprintf((char *)sendbuf, "ERR VALEUR ANGLE NON VALABLE\n");
+    }
+  }
+  // Commande "DIST"
+  else if (strncmp(cmd, "DIST",4) == 0) {
+    if (d < 0) {
+      message = (uint32_t)sprintf((char *)sendbuf, "ERR DIST TIMEOUT \n"); 
+    }
+    else {
+      message = (uint32_t)sprintf((char *)sendbuf, "%.1f\n", d); // Format avec 1 décimale
+    }
+  }
+	 // Commande "SCAN"
+  else if (strncmp(cmd, "SCAN", 4) == 0) {
+    if ((alpha >= 0) && (alpha <= 180)) {
+      message = (uint32_t)sprintf((char *)sendbuf, "%3d %.1f  END\n", alpha, d); // Message FINALE quand tout bon
+    }
+  }
+
+  else {
+    message = (uint32_t)sprintf((char *)sendbuf, "ERR\n");
+  }
+
+  // Réponse à l'expéditeur
+  netUDP_Send (socket, addr, sendbuf, message); //(socket dans parametre fonction,longueur=message);
  
   return (0);
 }
  
 // Send UDP data to destination client.
 void send_udp_data (void) {
- 
-  if (udp_sock > 0) {
-
-    // IPv4 address: 192.168.0.3
-    NET_ADDR addr = { NET_ADDR_IP4, 5000, 192, 168, 0, 3 };
-    uint8_t *sendbuf;
- 
-    sendbuf = netUDP_GetBuffer (2);
-    sendbuf[0] = 0x10;  // Récupérer les valeurs d'un autre fichier 
-    sendbuf[1] = 0x01;   //Récupérer les valeurs d'un autre fichier
- 
-    netUDP_Send (udp_sock, &addr, sendbuf, 2);
-    
-  }
 }
  
 // Allocate and initialize the socket.
 void Init_Ethernet (void) {
  
   netInitialize ();
- 
   // Initialize UDP socket and open port 5000
   udp_sock = netUDP_GetSocket (udp_cb_func);
   if (udp_sock > 0) {
@@ -60,4 +93,7 @@ void Init_Ethernet (void) {
   }
 }
 
+
 //! [code_UDP_Socket]
+
+

@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2025  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2026  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -140,7 +140,7 @@ static void _InitText(void) {
 */
 void APPW_X_Setup(void) {
   APPW_SetpfInitText(_InitText);
-  //APPW_X_FS_Init();
+ // APPW_X_FS_Init();
   APPW_MULTIBUF_Enable(_MultibufEnable);
   APPW_SetData(_apRootList, _NumScreens, _aVarList, _NumVars, _aScrollerList, _NumScrollers, (APPW_DRAWING_ITEM **)_appDrawing, _NumDrawings);
   APPW_SetSupportScroller(0);

@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2025  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2026  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -69,7 +69,7 @@ extern APPW_ROOT_INFO ID_SCREEN_00_RootInfo;
 *
 *       Project path
 */
-#define APPW_PROJECT_PATH "C:/Users/romain/Documents/projet_template/appwizard/TestAppwizard"
+#define APPW_PROJECT_PATH "C:/Etudiants/TP_LL/projet_template/appwizard/TestAppwizard"
 
 #endif  // RESOURCE_H
 

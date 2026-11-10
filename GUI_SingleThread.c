@@ -63,3 +63,20 @@ void Check_IP(void)
 	}
 }
 
+//void Capteur_Servo(void)
+//{
+//	uint8_t distance;
+//	WM_HWIN hItem;
+//	char texte[20];
+//	
+//	while(1)
+//	{
+//		osDelay(2000);	
+//	//	sprintf(texte, "US : %2.1f, Angle : %3d", ip4_addr[0],ip4_addr[1],ip4_addr[2],ip4_addr[3]);
+//			sprintf(texte, "US : %2.1f", ip4_addr[0],ip4_addr[1],ip4_addr[2],ip4_addr[3]);
+//		  
+//		GUI_ID_TEXT2 TEXT_SetText(hItem, texte);
+//	}
+//}
+
+
