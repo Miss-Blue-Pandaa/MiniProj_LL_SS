@@ -85,17 +85,26 @@ int main(void)
 	RCC->AHB1ENR|=(1<<0); //Activ GPIO A
 	RCC->AHB1ENR|=(1<<1); //Activ GPIO B
 	RCC->AHB1ENR|=(1<<5); //Activ GPIO F
+	RCC->AHB1ENR|=(1<<6); //Activ GPIO G
 	RCC->APB1ENR|=(1<<7); //Activ TIM13
-	RCC->APB2ENR|=(1<<17); //Activ TIM10
+	RCC->APB2ENR|=(1<<17);//Activ TIM10
+	RCC->APB2ENR|=(1<<1);	//Activ TIM8
 	
-	GPIOI->MODER|=(1<<4); //LED en output en PI2
-	GPIOA->MODER |= (3<<8); //PA4 en mode analog (sortie PA4)
-	GPIOB->MODER |= (0<<28); //PB14 ECHO input
-	GPIOB->MODER |= (3<<30);	//PB15 TRIG ouput
-	GPIOF->MODER |= (3<<20); //PF10 en mode analog potentiomètre
-	GPIOF->MODER |= (2<<16); //PF8 en mode AF
-	GPIOF->AFR[1] |= (9<<0); //PF8 en mode TIM13_CH1
+	GPIOI->MODER|=(1<<4); 		//LED en output en PI2
+	GPIOA->MODER |= (3<<8); 	//PA4 en mode analog (sortie PA4)
+	GPIOB->MODER |= (0<<28);	//PB14 ECHO input
+	GPIOB->MODER |= (2<<30);	//PB15 TRIG ouput AF
+	GPIOF->MODER |= (3<<20);	//PF10 en mode analog potentiomètre
+	GPIOF->MODER |= (2<<16);	//PF8 en mode AF
+	GPIOF->AFR[1] |= (9<<0);	//PF8 en mode TIM13_CH1
+	
+//	GPIOB->MODER |= (0<<28);	//PB14 ECHO input
+//	GPIOB->MODER |= (2<<30);	//PB15 TRIG ouput AF
+//	GPIOB->AFR[0] |= (3<<28); //PB15 en mode TIM8_CH3
+	GPIOF->MODER |= (2<<12);	//PF6 en mode AF
+	GPIOF->MODER |= (0<<14);	//PF7 echo INPUT
 	GPIOF->AFR[0] |= (3<<24); //PF6 en mode TIM10_CH1
+	
 //	DAC->CR |= (1<<0); //channel 1 en sortie
 //	ADC3->SQR3 |= (8<<0); // Selection de la voie PF10
 //	ADC3->CR2 |= (1<<0); // activation de l'ADC
@@ -107,13 +116,22 @@ int main(void)
 	TIM13->CCR1 = 4000;			//DutyCyle PWM
 	TIM13->CR1 |= (1<<0);		//Lancer le Timer
 
-//	TIM10->CCMR1 |= (6<<4); //TIM10_CH1 en PWM mode 1
-//	TIM10->CCER |= (1<<0);	//connectr 0C1 
-//	TIM10->PSC = 83; 				//Prescaler
-//	TIM10->ARR = 19999;			//Periode PWM
-//	TIM10->CCR1 = 4000;			//DutyCyle PWM
-//	TIM10->CR1 |= (1<<0);		//Lancer le Timer
-//                           
+	TIM10->CCMR1 |= (6<<4); //TIM10_CH1 en PWM mode 1
+	TIM10->CCER |= (1<<0);	//connectr 0C1 
+	TIM10->PSC = 33;      // Fréquence du timer = 168 MHz / 84 = 2 MHz (0.5 µs par tick)
+	TIM10->ARR = 62499;      // Période = 20 × 0.5 µs = 10 µs
+	TIM10->CCR1 = 25;     // Duty cycle = 100% (impulsion de 10 µs)
+	TIM10->CR1 |= (1<<0);		//Lancer le Timer
+	
+	
+
+//	TIM8->CCMR1 |= (6<<4); 	//TIM8_CH3 en PWM mode 1
+//	TIM8->CCER |= (1<<3);		//connectr 0C1 
+//	TIM8->PSC = 83; 				//Prescaler
+//	TIM8->ARR = 19999;			//Periode PWM
+//	TIM8->CCR1 = 4000;			//DutyCyle PWM
+//	TIM8->CR1 |= (1<<0);		//Lancer le Timer
+//   
 
 	/**********************************
 	Fin Initialisation périphérique
